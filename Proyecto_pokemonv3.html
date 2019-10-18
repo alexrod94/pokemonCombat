@@ -7,8 +7,8 @@ class pokemon {
         this.life = life;
         this.type = type;
     }
-    set herida(daño) {
-        this.life -= daño;
+    set herida(hurt) {
+        this.life -= hurt;
     }
     set recuperar(curar) {
         this.life += curar;
@@ -24,7 +24,7 @@ class pokemon {
     }
 }
 
-let charmander = new pokemon("Charmander", 40, ["Arañazo", "Llamarada", "Descanso"], 400, "fire")
+let charmander = new pokemon("Charmander", 40, ["Cuchillada", "Llamarada", "Descanso"], 400, "fire")
 let squirtle = new pokemon("Squirtle", 35, ["Descanso", "Placaje", "Hidrobomba"], 450, "water")
 let bulbasaur = new pokemon("Bulbasaur", 30, ["Hoja afilada", "Descanso", "Placaje"], 500, "leaf")
 let playerAttack;
@@ -65,7 +65,7 @@ let enemyChoice = () => {
 
 let generalAttack = (pokemon1, pokemon2, attack) => {
     switch(attack) {
-        case "arañazo":
+        case "Cuchillada":
         pokemon2.life -= pokemon1.strength;
         break;
         case "placaje":
@@ -114,7 +114,7 @@ let enemyTurn = (pokemon1, pokemon2) => {
     let attacks = [];
     switch(pokemon2.name) {
         case "Charmander":
-        attacks = ["arañazo", "llamarada", "descanso"];
+        attacks = ["Cuchillada", "llamarada", "descanso"];
         break;
         case "Squirtle":
         attacks = ["descanso", "placaje", "hidrobomba"];
