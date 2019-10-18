@@ -1,0 +1,82 @@
+<script>
+class pokemon {
+    constructor (name, strength, moves, life) {
+        this.name = name;
+        this.strength = strength;
+        this.moves = moves;
+        this.life = life;
+    }
+    set herida(daño) {
+        this.life -= daño;
+    }
+    set recuperar(curar) {
+        this.life += curar;
+    }
+    get getStrength() {
+        return this.strength;
+    }
+    get getLife() {
+        return this.life;
+    }
+    get getName() {
+        return this.name;
+    }
+}
+
+let charmander = new pokemon("Charmander", 40, ["Arañazo", "Llamarada", "Gruñido", "Descanso"], 400)
+let squirtle = new pokemon("Squirtle", 35, ["Burbuja", "Rizo defensa", "Placaje", "Hidrobomba"], 450)
+let bulbasaur = new pokemon("Bulbasaur", 40, ["Hoja afilada", "Semilla", "Placaje", "Rizo defensa", 500])
+
+let choice = () => {
+    let champion = prompt(`Elige a tu pokemon: \n -Charmander \n -Squirtle \n -Bulbasaur`).toLowerCase();
+    let randomAdversary = Math.floor(Math.random() * 2.9);
+    let adversary = null;
+    switch (champion) {
+        case "charmander":
+            if (randomAdversary === 0) {
+                combate(charmander, charmander)
+            } else if (randomAdversary === 1) {
+                combate(charmander, squirtle)
+            } else if (randomAdversary === 2) {
+                combate(charmander, bulbasaur)
+            }
+        break;
+        case "squirtle":
+            if (randomAdversary === 0) {
+                combate(squirtle, charmander)
+            } else if (randomAdversary === 1) {
+                combate(squirtle, squirtle)
+            } else if (randomAdversary === 2) {
+                combate(squirtle, bulbasaur)
+            }
+        break;
+        case "bulbasaur":
+            if (randomAdversary === 0) {
+                combate(bulbasaur, charmander)
+            } else if (randomAdversary === 1) {
+                combate(bulbasaur, squirtle)
+            } else if (randomAdversary === 2) {
+                combate(bulbasaur, bulbasaur)
+            }
+        break;
+    }
+}
+
+let playerTurn = (pokemon1) => {
+    let ataque = prompt(`Elige qué ataque quieres que haga ${pokemon1.name}: \n -${pokemon1.moves[0]} \n -${pokemon1.moves[1]} \n -${pokemon1.moves[2]} \n -${pokemon1.moves[3]}`)
+}
+
+let combate = (pokemon1, pokemon2) => {
+    alert(`Has escogido a ${pokemon1.name}`)
+    alert(`Tu adversario ha elegido a ${pokemon2.name}`)
+    while (pokemon1.life > 0 && pokemon2.life > 0) {
+        pokemon1.life -= pokemon2.strength;
+        pokemon2.life -= pokemon1.strength
+        console.log(`Vida ${pokemon1.name} P1: ${pokemon1.life}`)
+        console.log(`Vida ${pokemon2.name} P2: ${pokemon2.life}`)
+    }
+}
+
+
+choice()
+</script>

@@ -1,0 +1,193 @@
+<script>
+class pokemon {
+    constructor (name, strength, moves, life, type) {
+        this.name = name;
+        this.strength = strength;
+        this.moves = moves;
+        this.life = life;
+        this.type = type;
+    }
+    set herida(daño) {
+        this.life -= daño;
+    }
+    set recuperar(curar) {
+        this.life += curar;
+    }
+    get getStrength() {
+        return this.strength;
+    }
+    get getLife() {
+        return this.life;
+    }
+    get getName() {
+        return this.name;
+    }
+}
+
+let charmander = new pokemon("Charmander", 40, ["Arañazo", "Llamarada", "Descanso"], 400, "fire")
+let squirtle = new pokemon("Squirtle", 35, ["Descanso", "Placaje", "Hidrobomba"], 450, "water")
+let bulbasaur = new pokemon("Bulbasaur", 30, ["Hoja afilada", "Descanso", "Placaje"], 500, "leaf")
+let attacks = [];
+let playerAttack = null;
+let enemyAttack = null;
+
+let playerChoice = () => {
+    let pokemon1;
+    let champion = prompt(`Elige a tu pokemon: \n -Charmander \n -Squirtle \n -Bulbasaur`).toLowerCase();
+    switch (champion) {
+        case "charmander":
+        pokemon1 = charmander;
+        break;
+        case "squirtle":
+        pokemon1 = squirtle;
+        break;
+        case "bulbasaur":
+        pokemon1 = bulbasaur;
+        break;
+    }
+    return pokemon1;
+}
+let enemyChoice = () => {
+    let randomAdversary = Math.floor(Math.random() * 2.9);
+    let pokemon2;
+    switch (randomAdversary) {
+        case 0:
+        pokemon2 = charmander;
+        break;
+        case 1:
+        pokemon2 = squirtle;
+        break;
+        case 2:
+        pokemon2 = bulbasaur;
+        break;
+    }
+    return pokemon2;
+}
+
+let generalAttack = (pokemon1, pokemon2, attack) => {
+    switch(attack) {
+        case "arañazo":
+        pokemon2.life -= pokemon1.strength;
+        alert(`${pokemon1.name} ha utilizado Arañazo`);
+        break;
+        case "placaje":
+        pokemon2.life -= pokemon1.strength;
+        alert(`${pokemon1.name} ha utilizado Placaje`);
+        break;
+        case "llamarada":
+        if(pokemon2.type === "fire") {
+            pokemon2.life -= (pokemon1.strength);
+        } else if(pokemon2.type === "water") {
+            pokemon2.life -= (pokemon1.strength / 2);
+        } else if(pokemon2.type === "leaf") {
+            pokemon2.life -= (pokemon1.strength * 2);
+        }
+        break;
+        case "hidrobomba":
+        if(pokemon2.type === "fire") {
+            pokemon2.life -= (pokemon1.strength * 2);
+        } else if(pokemon2.type === "water") {
+            pokemon2.life -= (pokemon1.strength);
+        } else if(pokemon2.type === "leaf") {
+            pokemon2.life -= (pokemon1.strength / 2);
+        }
+        break;
+        case "hoja afilada":
+        if(pokemon2.type === "fire") {
+            pokemon2.life -= (pokemon1.strength / 2);
+        } else if(pokemon2.type === "water") {
+            pokemon2.life -= (pokemon1.strength * 2);
+        } else if(pokemon2.type === "leaf") {
+            pokemon2.life -= (pokemon1.strength);
+        }
+        break;
+        case "descanso":
+        pokemon1.life += pokemon1.strength;
+        break;
+    }
+}
+
+let playerTurn = (pokemon1, pokemon2) => {
+    let attack = prompt(`Elige qué ataque quieres que haga ${pokemon1.name}: \n -${pokemon1.moves[0]} \n -${pokemon1.moves[1]} \n -${pokemon1.moves[2]}`).toLowerCase();
+    switch(attack) {
+        case "arañazo":
+        pokemon2.life -= pokemon1.strength;
+        alert(`${pokemon1.name} ha utilizado Arañazo`);
+        break;
+        case "placaje":
+        pokemon2.life -= pokemon1.strength;
+        alert(`${pokemon1.name} ha utilizado Placaje`);
+        break;
+        case "llamarada":
+        if(pokemon2.type === "fire") {
+            pokemon2.life -= (pokemon1.strength);
+        } else if(pokemon2.type === "water") {
+            pokemon2.life -= (pokemon1.strength / 2);
+        } else if(pokemon2.type === "leaf") {
+            pokemon2.life -= (pokemon1.strength * 2);
+        }
+        break;
+        case "hidrobomba":
+        if(pokemon2.type === "fire") {
+            pokemon2.life -= (pokemon1.strength * 2);
+        } else if(pokemon2.type === "water") {
+            pokemon2.life -= (pokemon1.strength);
+        } else if(pokemon2.type === "leaf") {
+            pokemon2.life -= (pokemon1.strength / 2);
+        }
+        break;
+        case "hoja afilada":
+        if(pokemon2.type === "fire") {
+            pokemon2.life -= (pokemon1.strength / 2);
+        } else if(pokemon2.type === "water") {
+            pokemon2.life -= (pokemon1.strength * 2);
+        } else if(pokemon2.type === "leaf") {
+            pokemon2.life -= (pokemon1.strength);
+        }
+        break;
+        case "descanso":
+        pokemon1.life += pokemon1.strength;
+        break;
+    }
+    alert(`${pokemon1.name} ha utilizado ${ataque}.`)
+}
+
+let enemyTurn = (pokemon2) => {
+    switch(pokemon2) {
+        case "charmander":
+        attacks = ["arañazo", "llamarada", "descanso"];
+        break;
+        case "squirtle":
+        attacks = ["descanso", "placaje", "hidrobomba"];
+        break;
+        case "bulbasaur":
+        attacks = ["hoja afilada", "descanso", "placaje"];
+    }
+    let randomNum = Math.floor(Math.random() * 2.9)
+    enemyAttack = attacks[randomNum];
+
+    return enemyAttack;
+}
+
+let combate = (pokemon1, pokemon2) => {
+    alert(`Has escogido a ${pokemon1.name}`)
+    alert(`Tu adversario ha elegido a ${pokemon2.name}`)
+    while (pokemon1.life > 0 && pokemon2.life > 0) {
+        alert(`${pokemon2.name} utiliza ${enemyAttack}.`)
+        pokemon1.life -= pokemon2.strength
+        playerTurn(pokemon1, pokemon2)
+        alert(`Vida ${pokemon1.name} P1: ${pokemon1.life}`)
+        alert(`Vida ${pokemon2.name} P2: ${pokemon2.life}`)
+    }
+    if (pokemon1.life > 0) {
+        alert(`${pokemon2.name} se ha desmayado. El ganador ha sido P1`)
+    } else {
+        alert(`${pokemon1.name} se ha desmayado. El ganador ha sido P2`)
+    }
+}
+
+
+let pokemon1 = playerChoice()
+let pokemon2 = enemyChoice()
+combate(pokemon1, pokemon2)
+</script>
